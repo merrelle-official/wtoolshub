@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import SidebarMenu from './components/SidebarMenu.vue';
+import { RouterView } from 'vue-router';
+
 
 
 </script>
 
 <template>
     <SidebarMenu/>
+    <div class="main-page">
+        <RouterView />
+    </div>
+
 </template>
 
 <style scoped>
@@ -16,4 +22,9 @@ import SidebarMenu from './components/SidebarMenu.vue';
 Второстепенный акцентный: #6F2232
 Ховеры: #950740
 */
+
+.main-page{
+    padding-left: 3.5rem;
+    margin: 0;
+}
 </style>

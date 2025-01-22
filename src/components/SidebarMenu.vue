@@ -1,5 +1,6 @@
 <script setup lang="js">
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const menubarIsOpened = ref(false)
 
@@ -17,17 +18,20 @@ function openMenubar(){
                 <img src="@/assets/icons/Burger.svg" alt="burger" >
                 <p v-show="menubarIsOpened.valueOf()">Свернуть бургер</p>
             </div>
-            <div class="sidebar_burgerbtn icons" @click="openMenubar">
+            <router-link :to="{name: 'Home'}" class="sidebar_burgerbtn icons">
+                <img src="@/assets/icons/Home.svg" alt="timer" >
+                <p v-show="menubarIsOpened.valueOf()">Домашняя страница</p>
+            </router-link>
+            <router-link :to="{name: 'TimeTracker'}" class="sidebar_burgerbtn icons">
                 <img src="@/assets/icons/Timer.svg" alt="timer" >
                 <p v-show="menubarIsOpened.valueOf()">Таск трекер</p>
-            </div>
+            </router-link>
         </div>
-
         <div>
-            <div class="sidebar_burgerbtn icons" @click="openMenubar">
+            <router-link :to="{name: 'Settings'}" class="sidebar_burgerbtn icons">
                 <img src="@/assets/icons/Settings.svg" alt="settings">
                 <p v-show="menubarIsOpened.valueOf()">Настройки</p>
-            </div>
+            </router-link>
         </div>
 
 
@@ -45,6 +49,11 @@ img{
 p{
     text-wrap: nowrap;
     margin: 0;
+}
+
+a{
+    text-decoration: none;
+    color: white;
 }
 
 .sidebar{
