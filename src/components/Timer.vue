@@ -8,13 +8,25 @@ const hours = ref<number>(0)
 const minutes = ref<number>(0)
 const seconds = ref<number>(0)
 
+const timerIsStarted = ref<boolean>(false)
+
+const emits = defineEmits<{
+    (event: 'updateTimer', hours: number, minutes: number, seconds: number): void
+}>()
+
+function sendTimeToParent(){
+    emits('updateTimer', hours.value, minutes.value, seconds.value)
+}
+
 
 function startTimer(){
     if (!timer){
         timer = setInterval(() => {
             time.value = time.value + 1
         }, 1000)
+        timerIsStarted.value = true
     }
+
 
 }
 
@@ -23,11 +35,14 @@ function pouseTimer(){
         clearInterval(timer)
         timer = null
     }
+    timerIsStarted.value = false
+
 }
 
 function stopTimer(){
     pouseTimer()
     time.value = 0
+
 }
 
 function countingTime(){
@@ -38,6 +53,7 @@ function countingTime(){
 
 watch(time, () => {
     countingTime()
+    sendTimeToParent()
 })
 
 
@@ -51,8 +67,8 @@ watch(time, () => {
             <!-- <img src="@/assets/icons/TimerReset.svg" alt="" class="timer-reset"> -->
         </div>
         <div class="timer-controlls">
-            <img src="@/assets/icons/TimerPlay.svg" alt="" class="timer-start" @click="startTimer">
-            <img src="@/assets/icons/TimerPause.svg" alt="" class="timer-pause" @click="pouseTimer">
+            <img v-if="!timerIsStarted" src="@/assets/icons/TimerPlay.svg" alt="" class="timer-start" @click="startTimer">
+            <img v-else src="@/assets/icons/TimerPause.svg" alt="" class="timer-pause" @click="pouseTimer">
             <img src="@/assets/icons/TimerStop.svg" alt="" class="timer-stop" @click="stopTimer">
 
         </div>
