@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SidebarMenu from './components/SidebarMenu.vue';
+import SidebarMenu from '@/components/SidebarMenu.vue';
 import { RouterView } from 'vue-router';
 
 

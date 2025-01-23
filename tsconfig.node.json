@@ -19,7 +19,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
+    "noImplicitAny":false,
+    "lib": ["ESNext", "DOM"], // Убедитесь, что ESNext и DOM указаны
+    "types": [], // Очистите глобальные типы, если они указаны некорректно
     "baseUrl": ".",  // Указывает на корень проекта
     "paths": {
       "@/*": ["src/*"]  // Заменяет @ на папку src

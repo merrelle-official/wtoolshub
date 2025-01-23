@@ -7,11 +7,13 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "noImplicitAny":false,
+    "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*", "./"]
+    },
+    "lib": ["ESNext", "DOM"], // Обязательно указать
+    "types": []         // Добавьте node, чтобы устранить конфликт с глобальными типами
   },
   "include": [
     "src/**/*.ts",

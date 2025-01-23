@@ -8,11 +8,11 @@ const taskName = ref<string>('')
 const taskHours = ref<number>(0)
 const taskMinutes = ref<number>(0)
 const taskSeconds = ref<number>(0)
-const taskId = ref<number>(tasksStore.tasks.length + 1)
+const taskId = ref<number>(tasksStore.tasks.values.length + 1)
 
 
 
-function saveTask(e){
+function saveTask(e: Event){
     e.preventDefault()
     tasksStore.addTask({
         name: taskName.value,
