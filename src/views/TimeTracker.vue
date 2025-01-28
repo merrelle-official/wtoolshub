@@ -5,7 +5,7 @@ import TimerBlock from '@/components/TimerBlock.vue';
 import { useTaskTrackerStore } from '@/stores/taskTrackerStore';
 
 const tasksStore = useTaskTrackerStore();
-const hoveredTaskId = ref<number | null>(null);
+const hoveredTaskId = ref<string | null>(null);
 
 function chooseTask(id: string) {
     tasksStore.currentTask = tasksStore.tasks.find(task => task.id === id) || {
@@ -35,7 +35,7 @@ function editTask(id: string) {
             <div class="tasks">
                 <h2 class="title-block">Таски</h2>
                 <ul class="tasks-list">
-                    <li class="task newtask" @click="chooseTask(0)">
+                    <li class="task newtask" @click="chooseTask('')">
                         <img src="@/assets/icons/NewTask.svg" alt="Создать новую таску">
                     </li>
                     <li v-for="task in [...tasksStore.tasks].reverse()" :key="task.id" class="task"
