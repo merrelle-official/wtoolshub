@@ -6,25 +6,23 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "noImplicitAny":false,
-    "lib": ["ESNext", "DOM"], // Убедитесь, что ESNext и DOM указаны
-    "types": [], // Очистите глобальные типы, если они указаны некорректно
-    "baseUrl": ".",  // Указывает на корень проекта
+    "lib": ["ESNext", "DOM"],
+    "types": [],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]  // Заменяет @ на папку src
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "vite.config.ts"]

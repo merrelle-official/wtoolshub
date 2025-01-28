@@ -1,40 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Timer from './Timer.vue';
-import { useTaskTrackerStore } from '@/stores/taskTrackerStore';
+import { useTaskTrackerStore} from '@/stores/taskTrackerStore';
 
 const tasksStore = useTaskTrackerStore()
-const taskName = ref<string>('')
-const taskHours = ref<number>(0)
-const taskMinutes = ref<number>(0)
-const taskSeconds = ref<number>(0)
-const taskId = ref<number>(tasksStore.tasks.values.length + 1)
 
+type TimerInstance = {
+  stopTimer: () => void;
+};
+
+const timerComponent = ref<TimerInstance | null>(null);
 
 
 function saveTask(e: Event){
     e.preventDefault()
-    tasksStore.addTask({
-        name: taskName.value,
-        hours: taskHours.value,
-        minutes: taskMinutes.value,
-        seconds: taskSeconds.value,
-        id: taskId.value
-    })
+    if (timerComponent.value) {
+        timerComponent.value.stopTimer();
+    }
+    tasksStore.addTask(tasksStore.currentTask);
 }
 
-function updateTimer(hours: number, minutes: number, seconds: number){
-    taskHours.value = hours
-    taskMinutes.value = minutes
-    taskSeconds.value = seconds
-}
 </script>
 
 <template>
     <div class="timer-block">
-        <Timer @updateTimer="updateTimer" />
+        <Timer ref="timerComponent"/>
         <form class="input-task">
-            <input type="text" placeholder="Enter task name" class="input-task__name" v-model="taskName">
+            <input type="text" placeholder="Enter task name" class="input-task__name" v-model="tasksStore.currentTask.name"/>
             <button class="save-task" @click="saveTask">Сохранить таску</button>
         </form>
     </div>

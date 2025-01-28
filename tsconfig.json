@@ -1,8 +1,7 @@
 {
   "files": [],
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"], // Убедитесь, что ESNext и DOM указаны
-    "types": [] // Очистите глобальные типы, если они указаны некорректно
+    "lib": ["ESNext", "DOM"]
   },
   "references": [
     { "path": "./tsconfig.app.json" },

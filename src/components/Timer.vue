@@ -1,28 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { useTaskTrackerStore } from '@/stores/taskTrackerStore';
+import { computed, ref} from 'vue';
 
+const countedTime = computed(() => trackStore.countingTime(trackStore.currentTask.time));
+let timer: number | NodeJS.Timeout | null;
 
-const time = ref<number>(0)
-let timer: number | null = null;
-const hours = ref<number>(0)
-const minutes = ref<number>(0)
-const seconds = ref<number>(0)
+const trackStore = useTaskTrackerStore()
+
+defineExpose({
+    stopTimer
+})
 
 const timerIsStarted = ref<boolean>(false)
-
-const emits = defineEmits<{
-    (event: 'updateTimer', hours: number, minutes: number, seconds: number): void
-}>()
-
-function sendTimeToParent(){
-    emits('updateTimer', hours.value, minutes.value, seconds.value)
-}
-
 
 function startTimer(){
     if (!timer){
         timer = setInterval(() => {
-            time.value = time.value + 1
+            trackStore.currentTask.time = trackStore.currentTask.time + 1
         }, 1000)
         timerIsStarted.value = true
     }
@@ -30,7 +24,7 @@ function startTimer(){
 
 }
 
-function pouseTimer(){
+function pauseTimer(){
     if (timer){
         clearInterval(timer)
         timer = null
@@ -40,35 +34,19 @@ function pouseTimer(){
 }
 
 function stopTimer(){
-    pouseTimer()
-    time.value = 0
-
+    pauseTimer()
 }
-
-function countingTime(){
-    hours.value = Math.floor(time.value / 3600)
-    minutes.value = Math.floor((time.value % 3600) / 60)
-    seconds.value = time.value % 60
-}
-
-watch(time, () => {
-    countingTime()
-    sendTimeToParent()
-})
-
-
 
 </script>
 
 <template>
     <div class="timer-container">
         <div class="timer-body">
-            <p>{{ hours<10 ? '0' + hours : hours }}:{{ minutes<10 ? '0' + minutes : minutes }}:{{ seconds<10 ? '0' + seconds : seconds }}</p>
-            <!-- <img src="@/assets/icons/TimerReset.svg" alt="" class="timer-reset"> -->
+            <p>{{ countedTime.valueOf() }}</p>
         </div>
         <div class="timer-controlls">
             <img v-if="!timerIsStarted" src="@/assets/icons/TimerPlay.svg" alt="" class="timer-start" @click="startTimer">
-            <img v-else src="@/assets/icons/TimerPause.svg" alt="" class="timer-pause" @click="pouseTimer">
+            <img v-else src="@/assets/icons/TimerPause.svg" alt="" class="timer-pause" @click="pauseTimer">
             <img src="@/assets/icons/TimerStop.svg" alt="" class="timer-stop" @click="stopTimer">
 
         </div>
@@ -104,10 +82,4 @@ img:hover{
     background-color: #3B3B3B;
 }
 
-/*.timer-reset{
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-40%) translateX(150%);
-}*/
 </style>

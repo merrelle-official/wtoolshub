@@ -10,6 +10,7 @@ interface Props{
 const props = defineProps<Props>()
 const isMounted = ref<boolean>(false)
 
+
 onMounted(() => {
     setTimeout(() => {
         isMounted.value = true;
