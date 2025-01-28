@@ -14,10 +14,12 @@ const timerComponent = ref<TimerInstance | null>(null);
 
 function saveTask(e: Event){
     e.preventDefault()
+    tasksStore.addTask(tasksStore.currentTask);
     if (timerComponent.value) {
         timerComponent.value.stopTimer();
     }
-    tasksStore.addTask(tasksStore.currentTask);
+    
+    
 }
 
 </script>
@@ -26,7 +28,7 @@ function saveTask(e: Event){
     <div class="timer-block">
         <Timer ref="timerComponent"/>
         <form class="input-task">
-            <input type="text" placeholder="Enter task name" class="input-task__name" v-model="tasksStore.currentTask.name"/>
+            <input type="text" placeholder="Введите название таски" class="input-task__name" v-model="tasksStore.currentTask.name"/>
             <button class="save-task" @click="saveTask">Сохранить таску</button>
         </form>
     </div>

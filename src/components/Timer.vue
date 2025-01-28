@@ -35,6 +35,7 @@ function pauseTimer(){
 
 function stopTimer(){
     pauseTimer()
+    trackStore.currentTask.time = 0;
 }
 
 </script>

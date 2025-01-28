@@ -13,7 +13,6 @@ function chooseTask(id: string) {
         time: 0,
         id: ''
     }
-    console.log(tasksStore.tasks.find(task => task.id === id));
 }
 
 function removeTask(id: string) {

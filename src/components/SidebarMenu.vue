@@ -1,17 +1,20 @@
 <script setup lang="js">
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useProjectsStore } from '@/stores/projectsStore';
+
 
 const menubarIsOpened = ref(false)
+const projectStore = useProjectsStore()
 
 function openMenubar(){
     menubarIsOpened.value = !menubarIsOpened.value
-    console.log(menubarIsOpened.value)
 }
 
 </script>
 
 <template>
+    <div class="background" v-if="menubarIsOpened.valueOf()" @click="openMenubar"></div>
     <div :class="{'sidebar':true, 'menu_opened':menubarIsOpened.valueOf()}">
         <div>
             <div class="sidebar_burgerbtn icons" @click="openMenubar">
@@ -22,10 +25,15 @@ function openMenubar(){
                 <img src="@/assets/icons/Home.svg" alt="timer" >
                 <p v-show="menubarIsOpened.valueOf()">Домашняя страница</p>
             </router-link>
-            <router-link :to="{name: 'TimeTracker'}" class="sidebar_burgerbtn icons">
+
+            <router-link v-for="project in projectStore.projects" :key="project.id" :to="{name: project.link}" class="sidebar_burgerbtn icons">
+                <img :src="project.img" alt="" >
+                <p v-show="menubarIsOpened.valueOf()">{{project.name}}</p>
+            </router-link>
+            <!-- <router-link :to="{name: 'TimeTracker'}" class="sidebar_burgerbtn icons">
                 <img src="@/assets/icons/Timer.svg" alt="timer" >
                 <p v-show="menubarIsOpened.valueOf()">Таск трекер</p>
-            </router-link>
+            </router-link> -->
         </div>
         <div>
             <router-link :to="{name: 'Settings'}" class="sidebar_burgerbtn icons">
@@ -39,6 +47,17 @@ function openMenubar(){
 </template>
 
 <style lang="css" scoped>
+
+.background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
 img{
     width: 3.5rem;
     padding: 0.5rem;
@@ -69,6 +88,7 @@ a{
     flex-direction: column;
     align-items: start;
     transition: all 0.2s ease-in-out;
+    z-index: 2;
 }
 
 .sidebar>*{
